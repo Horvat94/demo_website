@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coming Soon</title>
+  <title>Prihajamo boljši</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -54,12 +54,12 @@
     width: 90%;
     height: 70%;
 
-    background: rgba(255, 255, 255, 0.39);
+    /*background: rgba(255, 255, 255, 0.39);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(7.9px);
     -webkit-backdrop-filter: blur(7.9px);
-    border: 1px solid rgba(255, 255, 255, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.37);*/
 }
 .container-wrapper-content{
   margin: 0;
@@ -70,12 +70,12 @@
 }
 
 .container-wrapper--img{
-  width: 300px;
+  width: 400px;
   height: auto;
   transform: rotate(-90deg);
   position: absolute;
-  top: -250px;
-  left: 0px;
+  top: -390px;
+  left: 100px;
 }
 
 .headline {
@@ -96,8 +96,8 @@ p {
     height: auto;
     transform: rotate(-90deg);
     position: absolute;
-    top: -150px;
-    left: 0px;
+    top: -200px;
+    left: 100px;
     }
   .headline {
     font-weight: 900;
@@ -110,7 +110,13 @@ p {
       font-size: 16px;
       line-height: 1;
     }
-  }
+    :root {
+      --icon-count: 48;         /* how many icons to spawn */
+      --min-size: 10;           /* px */
+      --max-size: 20;           /* px */
+    }
+
+}
 
   @media only screen and (max-width: 600px) {
   .container-wrapper--img{
@@ -169,38 +175,37 @@ p {
   <div class=" container-wrapper text--center">
     <div class="container-wrapper-content">
       <img class="container-wrapper--img" src="rm-design_logo_copy.png" alt="">
-        <h1 class="headline">Stran je v prenovi</h1>
+        <h1 class="headline">Prihajamo boljši!</h1>
         <p>Kmalu se vrnemo z novo podobo.</p>
         <p>Hvala za razumevanje in potrpežljivost.</p>
     </div>
 </div>
 
-  <script>
-    (function () {
-      // Choose any FA7 icons you like (brands/solid/regular depending on your kit)
-      const icons = [
-        "fa-solid fa-shirtz",
-        "fa-solid fa-stocking",
-       // "fa-solid fa-ruler",
-        "fa-solid fa-address-card",
-        "fa-solid fa-bag-shopping",
-        "fa-solid fa-dress",
-        "fa-solid fa-pants",
-        "fa-solid fa-pencil",
-        "fa-solid fa-bottle-water"
-      ];
-
-      const layer = document.getElementById("bgIcons");
-      const {
-        iconCount, minSize, maxSize, minRot, maxRot,
-        minOpacity, maxOpacity, minSpeed, maxSpeed
-      } = {
-        iconCount: parseInt(getComputedStyle(document.documentElement)
-          .getPropertyValue("--icon-count")),
-        minSize: parseFloat(getComputedStyle(document.documentElement)
-          .getPropertyValue("--min-size")),
-        maxSize: parseFloat(getComputedStyle(document.documentElement)
-          .getPropertyValue("--max-size")),
+<script>
+  (function () {
+    // pick your FA icons (note: double-check names exist in your kit)
+    const icons = [
+      "fa-solid fa-shirt",        // "fa-shirtz" looked like a typo
+      "fa-solid fa-socks",        // "fa-stocking" -> "fa-socks" (unless your kit has it)
+      // "fa-solid fa-ruler",
+      "fa-solid fa-address-card",
+      "fa-solid fa-bag-shopping",
+      "fa-solid fa-person-dress",
+      "fa-solid fa-person-pants", // or "fa-solid fa-grip-lines" if not available
+      "fa-solid fa-pencil",
+      "fa-solid fa-bottle-water"
+    ];
+  
+    const layer = document.getElementById("bgIcons");
+  
+    // read current CSS variable values
+    function readVars(){
+      const cs = getComputedStyle(document.documentElement);
+      const val = k => parseFloat(cs.getPropertyValue(k));
+      return {
+        iconCount: parseInt(cs.getPropertyValue("--icon-count")),
+        minSize: val("--min-size"),
+        maxSize: val("--max-size"),
         minRot:  -25,
         maxRot:   25,
         minOpacity: 0.08,
@@ -208,62 +213,99 @@ p {
         minSpeed: 18, // seconds
         maxSpeed: 45  // seconds
       };
-
-      function rand(min, max) {
-        return Math.random() * (max - min) + min;
+    }
+  
+    let cfg = readVars();
+  
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+  
+    function spawnIcon() {
+      const i = document.createElement("i");
+      i.className = icons[Math.floor(Math.random() * icons.length)];
+  
+      // choose a stable size ratio we can reuse on resize
+      const r = Math.random(); // 0..1
+      const size = cfg.minSize + r * (cfg.maxSize - cfg.minSize);
+  
+      // random pos/rot/opacity/anim
+      const x = rand(-5, 95);
+      const yStart = rand(-10, 110);
+      const rot = rand(cfg.minRot, cfg.maxRot);
+      const duration = rand(cfg.minSpeed, cfg.maxSpeed);
+      const delay = rand(0, duration);
+  
+      i.style.position = "absolute";
+      i.style.fontSize = size + "px";
+      i.style.left = x + "vw";
+      i.style.top = yStart + "vh";
+  
+      // soft random color (you can replace with a fixed tint if you want)
+      i.style.color = `rgb(${rand(0,255)}, ${rand(0,255)}, ${rand(0,255)})`;
+  
+      // create a unique animation per icon
+      const driftName = "drift_" + Math.random().toString(36).slice(2);
+      const keyframes = `
+        @keyframes ${driftName} {
+          0%   { transform: translate3d(0, 0, 0) rotate(${rot}deg); }
+          50%  { transform: translate3d(${rand(-20,20)}px, ${rand(-40,40)}px, 0) rotate(${rot + rand(-10,10)}deg); }
+          100% { transform: translate3d(${rand(-10,10)}px, ${rand(-60,60)}px, 0) rotate(${rot + rand(-15,15)}deg); }
+        }
+      `;
+      const styleEl = document.createElement("style");
+      styleEl.innerHTML = keyframes;
+      document.head.appendChild(styleEl);
+  
+      i.style.animation = `${driftName} ${duration}s ease-in-out ${delay}s infinite alternate`;
+  
+      // store ratio so we can rescale later
+      i.dataset.ratio = r.toString();
+  
+      layer.appendChild(i);
+    }
+  
+    function syncIconCount() {
+      const target = cfg.iconCount;
+      const have = layer.children.length;
+      if (have < target) {
+        for (let n = have; n < target; n++) spawnIcon();
+      } else if (have > target) {
+        for (let n = 0; n < have - target; n++) {
+          layer.removeChild(layer.children[Math.floor(Math.random() * layer.children.length)]);
+        }
       }
-
-      function spawnIcon() {
-        const i = document.createElement("i");
-        i.className = icons[Math.floor(Math.random() * icons.length)];
-
-        // random size/pos/opacity
-        const size = rand(minSize, maxSize);
-        const x = rand(-5, 95);         // allow slight overflow for nicer edges
-        const yStart = rand(-10, 110);  // random vertical starting point
-        const rot = rand(minRot, maxRot);
-        const opacity = rand(minOpacity, maxOpacity);
-        const duration = rand(minSpeed, maxSpeed);
-        const delay = rand(0, duration);
-
-        i.style.fontSize = size + "px";
-        i.style.left = x + "vw";
-        i.style.top = yStart + "vh";
-        //i.style.opacity = opacity.toFixed(2);
-   
-
-        // random gentle color (white-ish tints)
-        //i.style.color = `hsla(${Math.floor(rand(0,360))}, 70%, 85%, ${opacity.toFixed(2)})`;
-        i.style.color = `hsla(${Math.floor(rand(0,360))}, 90%, 89%, 90%)`;
-        // create a unique animation per icon
-        const driftName = "drift_" + Math.random().toString(36).slice(2);
-        const keyframes = `
-          @keyframes ${driftName} {
-            0%   { transform: translate3d(0, 0, 0) rotate(${rot}deg); }
-            50%  { transform: translate3d(${rand(-20,20)}px, ${rand(-40,40)}px, 0) rotate(${rot + rand(-10,10)}deg); }
-            100% { transform: translate3d(${rand(-10,10)}px, ${rand(-60,60)}px, 0) rotate(${rot + rand(-15,15)}deg); }
-          }
-        `;
-        // inject the keyframes once per icon
-        const styleEl = document.createElement("style");
-        styleEl.innerHTML = keyframes;
-        document.head.appendChild(styleEl);
-
-        i.style.animation = `${driftName} ${duration}s ease-in-out ${delay}s infinite alternate`;
-
-        layer.appendChild(i);
-      }
-
-      // Spawn initial batch
-      for (let n = 0; n < iconCount; n++) spawnIcon();
-
-      // Optional: occasionally replace a random icon to keep it lively
-      setInterval(() => {
-        if (!layer.children.length) return;
-        layer.removeChild(layer.children[Math.floor(Math.random() * layer.children.length)]);
-        spawnIcon();
-      }, 4000);
-    })();
+    }
+  
+    function rescaleExistingIcons() {
+      // recompute each icon's px size from its stored ratio
+      [...layer.children].forEach(el => {
+        const r = parseFloat(el.dataset.ratio || Math.random());
+        const newSize = cfg.minSize + r * (cfg.maxSize - cfg.minSize);
+        el.style.fontSize = newSize + "px";
+      });
+    }
+  
+    // initial spawn
+    for (let n = 0; n < cfg.iconCount; n++) spawnIcon();
+  
+    // keep it lively
+    const swapTimer = setInterval(() => {
+      if (!layer.children.length) return;
+      layer.removeChild(layer.children[Math.floor(Math.random() * layer.children.length)]);
+      spawnIcon();
+    }, 4000);
+  
+    // on resize: refresh CSS-driven config, rescale icons, and adjust count
+    let resizeTO;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTO);
+      resizeTO = setTimeout(() => {
+        cfg = readVars();
+        rescaleExistingIcons();
+        syncIconCount();
+      }, 120);
+    });
+  
+  })();
   </script>
 </body>
 </html>
