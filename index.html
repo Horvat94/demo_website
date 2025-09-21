@@ -136,7 +136,7 @@ p {
   .headline {
     font-weight: 900;
     text-transform: uppercase;
-    font-size: 35px;
+    font-size: 30px;
     line-height: 1.2;
     }
   p {
@@ -237,11 +237,15 @@ p {
   let cfg = readVars();
 
   // Helpers
+  const HEX_COLORS = [
+  "#99B605", "#0192BB", "#63248B", "#BC0063", "#DD8D01",
+  "#E5C800"
+];
   const rand  = (min, max) => Math.random() * (max - min) + min;
   const randi = (min, max) => Math.floor(rand(min, max + 1));
 
-  function randomRgbString(){
-    return `rgb(${randi(0,255)}, ${randi(0,255)}, ${randi(0,255)})`;
+  function randomHexString(){
+    return `${HEX_COLORS[randi(0,6)]}`;
   }
 
   function spawnDot() {
@@ -280,7 +284,7 @@ p {
       width: size + "px",
       height: size + "px",
       borderRadius: "50%",
-      backgroundColor: randomRgbString(),
+      backgroundColor: randomHexString(),
       opacity: 1,
       animation: `${driftName} ${duration}s ease-in-out ${delay}s infinite alternate`,
       willChange: "transform"
