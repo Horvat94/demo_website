@@ -64,6 +64,10 @@
   left: 0;
 }
 
+.text--normal{
+  font-weight: 400;
+}
+
 .headline {
     font-weight: 900;
     text-transform: uppercase;
@@ -91,7 +95,13 @@ p {
     .contact_services--text{
       font-weight: 900;
       font-size: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      display: block;
     }
+    
+
+
 
 @media only screen and (max-width: 830px) {
   .container-wrapper--img{
@@ -163,6 +173,9 @@ p {
     .contact_services--text{
       font-size: 12px;
     }
+    .contact p span:nth-child(2):before{
+      content: ' '; display: block;
+    }
   }
   @media only screen and (max-width: 300px) {
     .background-image{
@@ -182,10 +195,11 @@ p {
       <img class="container-wrapper--img" src="rm-design_logo_copy.png" alt="">
         <h1 class="headline">Prihajamo boljši!</h1>
         <p>Kmalu se vrnemo z novo podobo.</p>
-        <p>Hvala za razumevanje.</p>
+        <p class="text--normal">Hvala za razumevanje.</p>
         <div class="contact">
           <span class="contact_services--text">UV tiskarna | sitotiskarna | tampotiskarna | tiskarna tekstila in papirnatih vrečk</span>
-          <p>RM design</br>Robert Metličar s.p.</br>Trčova 169</br>SI-2229 Malečnik</p>
+          
+          <p><span>RM Design, Robert Metličar s.p.,</span><span> Trčova 169, SI-2229 Malečnik</span></p>
           <p><a href="tel:+38668641427">+386 68 641 427</a></br><a href="tel:+38641758117">+386 41 758 117</a></br><a href="mailto:info@rm-design.si">info@rm-design.si</a></p>
         </div>
         
