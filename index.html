@@ -13,17 +13,7 @@
 
   <style>
     /* Page baseline */
-    :root {
-      --icon-count: 48;         /* how many icons to spawn */
-      --min-size: 16;           /* px */
-      --max-size: 64;           /* px */
-      --min-rot: -25deg;
-      --max-rot: 25deg;
-      --min-opacity: 0.08;
-      --max-opacity: 0.25;
-      --min-speed: 18s;         /* slower = calmer */
-      --max-speed: 45s;
-    }
+  
 
     html, body {
       height: 100%;
@@ -31,35 +21,34 @@
     }
 
     body {
-      display: grid;
       place-items: center;
       font-family:  "Roboto", Arial, sans-serif;
       color: #333;
       overflow: hidden; /* keep icons from creating scrollbars */
-      background: #fff;
-      background-size: 300% 300%;
-      animation: bgShift 20s ease-in-out infinite;
     }
-
-    .container-wrapper {
+.background-image{
+  position: absolute;
+  background-image: url("Background_dots_large.png");
+   /*background-size: cover;*/
+   background-attachment: fixed;
+   background-repeat: no-repeat;
+   background-position: center center;
+   width: 100%;
+   height: 100%;
+  scale: 1.2;
+}
+.container-wrapper {
     z-index: 9;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
-
     text-align: center;
     width: 50%;
     height: 80%;
-
-    background: rgba(255, 255, 255, 100%);
     border-radius: 16px;
-   /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);*/
-   /* backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);*/
-    /*border: 1px solid rgba(255, 255, 255, 0.37);*/
-    box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
 }
+
 .container-wrapper-content{
   margin: 0;
   position: absolute;
@@ -69,7 +58,7 @@
 }
 
 .container-wrapper--img{
-  width: 400px;
+  width: 500px;
   height: auto;
   position: relative;
   left: 0;
@@ -78,24 +67,30 @@
 .headline {
     font-weight: 900;
     text-transform: uppercase;
-    font-size: 75px;
+    font-size: 60px;
     line-height: 1.2;
     margin-top: 0px;
 }
 p {
-    font-weight: 400;
+    font-weight: 900;
     font-size: 24px;
     line-height: 0.5;
 }
 
 .contact p,a{
-      font-size: 18px;
+      font-size: 14px;
       line-height: 1.2;
+      font-weight: 400;
     }
 
     .contact a{
       text-decoration: none;
       color: #333;
+    }
+
+    .contact_services--text{
+      font-weight: 900;
+      font-size: 20px;
     }
 
 @media only screen and (max-width: 830px) {
@@ -124,6 +119,14 @@ p {
     .contact p,a{
       font-size: 12px;
     }
+    .contact_services--text{
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .background-image{
+    scale: 1;
+    }
 }
 
   @media only screen and (max-width: 600px) {
@@ -150,49 +153,38 @@ p {
     width: 100%;
     height: 100%;
     }
+
+    .background-image{
+    scale: 1.5;
+  background-image: url("Background_dots_small.png");
+  background-position-y:45%;
+
+    }
+    .contact_services--text{
+      font-size: 12px;
+    }
   }
+  @media only screen and (max-width: 300px) {
+    .background-image{
+    scale: 1.5;
 
-
-
-
-    @keyframes bgShift {
-      0%   { background-position:   0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position:   0% 50%; }
     }
-
-    /* Background icon layer */
-    .bg-icons {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;      /* let clicks pass through */
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .bg-icons i {
-      position: absolute;
-      will-change: transform, opacity;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
-    }
-
-   
-
+  }
   </style>
 </head>
 <body>
 
-  <!-- Background icon layer -->
-  <div class="bg-icons" id="bgIcons"></div>
+  <div class="background-image"></div>
 
 
-  <div class=" container-wrapper text--center">
+  <div class="container-wrapper text--center">
     <div class="container-wrapper-content">
       <img class="container-wrapper--img" src="rm-design_logo_copy.png" alt="">
         <h1 class="headline">Prihajamo boljši!</h1>
         <p>Kmalu se vrnemo z novo podobo.</p>
-        <p>Hvala za razumevanje in potrpežljivost.</p>
+        <p>Hvala za razumevanje.</p>
         <div class="contact">
+          <span class="contact_services--text">UV tiskarna | sitotiskarna | tampotiskarna | tiskarna tekstila in papirnatih vrečk</span>
           <p>RM design</br>Robert Metličar s.p.</br>Trčova 169</br>SI-2229 Malečnik</p>
           <p><a href="tel:+38668641427">+386 68 641 427</a></br><a href="tel:+38641758117">+386 41 758 117</a></br><a href="mailto:info@rm-design.si">info@rm-design.si</a></p>
         </div>
@@ -200,149 +192,6 @@ p {
     </div>
 </div>
 
-<script>
-(function () {
-  // Grab (or create) the layer
-  let layer = document.getElementById("bgIcons");
-  if (!layer) {
-    layer = document.createElement("div");
-    layer.id = "bgIcons";
-    layer.setAttribute("aria-hidden", "true");
-    Object.assign(layer.style, {
-      position: "absolute",
-      inset: "0",
-      overflow: "hidden",
-      pointerEvents: "none"
-    });
-    document.body.appendChild(layer);
-  }
 
-  // Read current CSS variable values
-  function readVars(){
-    const cs = getComputedStyle(document.documentElement);
-    const num = k => parseFloat(cs.getPropertyValue(k));
-    return {
-      iconCount: parseInt(cs.getPropertyValue("--icon-count")) || 24,
-      minSize: num("--min-size") || 10,
-      maxSize: num("--max-size") || 36,
-      minRot:  -25,
-      maxRot:   25,
-      minOpacity: 0.08,
-      maxOpacity: 0.25,
-      minSpeed: 18, // seconds
-      maxSpeed: 45  // seconds
-    };
-  }
-
-  let cfg = readVars();
-
-  // Helpers
-  const HEX_COLORS = [
-  "#99B605", "#0192BB", "#63248B", "#BC0063", "#DD8D01",
-  "#E5C800"
-];
-  const rand  = (min, max) => Math.random() * (max - min) + min;
-  const randi = (min, max) => Math.floor(rand(min, max + 1));
-
-  function randomHexString(){
-    return `${HEX_COLORS[randi(0,6)]}`;
-  }
-
-  function spawnDot() {
-    const dot = document.createElement("div");
-    dot.className = "bg-dot";
-
-    // stable size ratio we can reuse on resize
-    const r = Math.random(); // 0..1
-    const size = cfg.minSize + r * (cfg.maxSize - cfg.minSize);
-
-    // random pos/rot/opacity/anim
-    const x = rand(-5, 95);
-    const yStart = rand(-10, 110);
-    const rot = rand(cfg.minRot, cfg.maxRot);
-    const duration = rand(cfg.minSpeed, cfg.maxSpeed);
-    const delay = rand(0, duration);
-
-    // unique drift animation per dot
-    const driftName = "drift_" + Math.random().toString(36).slice(2);
-    const keyframes = `
-      @keyframes ${driftName} {
-        0%   { transform: translate3d(0, 0, 0) rotate(${rot}deg); }
-        50%  { transform: translate3d(${rand(-20,20)}px, ${rand(-40,40)}px, 0) rotate(${rot + rand(-10,10)}deg); }
-        100% { transform: translate3d(${rand(-10,10)}px, ${rand(-60,60)}px, 0) rotate(${rot + rand(-15,15)}deg); }
-      }
-    `;
-    const styleEl = document.createElement("style");
-    styleEl.textContent = keyframes;
-    document.head.appendChild(styleEl);
-
-    // style the dot
-    Object.assign(dot.style, {
-      position: "absolute",
-      left: x + "vw",
-      top: yStart + "vh",
-      width: size + "px",
-      height: size + "px",
-      borderRadius: "50%",
-      backgroundColor: randomHexString(),
-      opacity: 1,
-      animation: `${driftName} ${duration}s ease-in-out ${delay}s infinite alternate`,
-      willChange: "transform"
-    });
-
-    // store ratio so we can rescale later
-    dot.dataset.ratio = r.toString();
-
-    layer.appendChild(dot);
-  }
-
-  function syncIconCount() {
-    const target = cfg.iconCount;
-    const have = layer.children.length;
-    if (have < target) {
-      for (let n = have; n < target; n++) spawnDot();
-    } else if (have > target) {
-      for (let n = 0; n < have - target; n++) {
-        if (!layer.children.length) break;
-        layer.removeChild(layer.children[Math.floor(Math.random() * layer.children.length)]);
-      }
-    }
-  }
-
-  function rescaleExistingDots() {
-    // recompute each dot's px size from its stored ratio
-    [...layer.children].forEach(el => {
-      const r = parseFloat(el.dataset.ratio || Math.random());
-      const newSize = cfg.minSize + r * (cfg.maxSize - cfg.minSize);
-      el.style.width  = newSize + "px";
-      el.style.height = newSize + "px";
-    });
-  }
-
-  // initial spawn
-  for (let n = 0; n < cfg.iconCount; n++) spawnDot();
-
-  // keep it lively: occasionally replace one
-  const swapTimer = setInterval(() => {
-    if (!layer.children.length) return;
-    layer.removeChild(layer.children[Math.floor(Math.random() * layer.children.length)]);
-    spawnDot();
-  }, 4000);
-
-  // on resize: refresh CSS-driven config, rescale dots, and adjust count
-  let resizeTO;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTO);
-    resizeTO = setTimeout(() => {
-      cfg = readVars();
-      rescaleExistingDots();
-      syncIconCount();
-    }, 120);
-  });
-
-  // Optional: observe CSS var changes via a resize of root font-size/layout
-  // (advanced use-cases may add a MutationObserver to watch for style changes)
-})();
-</script>
 </body>
 </html>
