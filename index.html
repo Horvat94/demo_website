@@ -35,6 +35,7 @@
    background-position: center center;
    width: 100%;
    height: 100%;
+   background-size: 178%;
 }
 .container-wrapper {
     z-index: 9;
@@ -134,9 +135,9 @@ p {
     }
 
     .background-image{
-      scale: 2.8;
         background-image: url(Background_dots_small.svg);
-        background-position-y: 48%;
+        background-position: center 73%;
+        background-size: 292%
     }
 }
 
@@ -166,9 +167,10 @@ p {
     }
 
     .background-image{
-    scale: 2.1;
   background-image: url("Background_dots_small.svg");
-  background-position-y:48%;
+ 
+  background-size: 302%;
+  background-position: center 28%;
 
     }
     .contact_services--text{
@@ -178,12 +180,19 @@ p {
       content: ' '; display: block;
     }
   }
-  @media only screen and (max-width: 300px) {
+  @media only screen and (max-width: 375px) {
     .background-image{
-    scale: 1.9;
-
+      background-position: center 28%;
+        background-size: 390%;
     }
   }
+
+  @media only screen and (min-width: 1300px) {
+    .background-image{
+      background-position: center 28%;
+        background-size: 110%;
+    } 
+}
   </style>
 </head>
 <body>
